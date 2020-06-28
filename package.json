@@ -1,6 +1,6 @@
 {
   "name": "addon_template",
-  "version": "20.6.28i41",
+  "version": "20.6.28i53",
   "description": "template for trgkanki's addon",
   "scripts": {
     "dev:js": "cross-env NODE_ENV=development webpack -w --progress",
