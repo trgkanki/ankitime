@@ -1,6 +1,9 @@
-/* eslint no-inner-declarations:0 */
+import toastr from 'toastr'
+import 'toastr/build/toastr.css'
 
 import { setVisibilityCallback } from './visibility'
+
+/* eslint no-inner-declarations:0 */
 
 if (!window._atInitialized) {
   window._atInitialized = true
@@ -32,6 +35,7 @@ if (!window._atInitialized) {
       alertAudio.pause()
       justPlay(resumeAudio)
       alertPlaying = false
+      toastr.info('Resuming reviews...')
     }
   }
 
