@@ -8,12 +8,18 @@
 
 from aqt.reviewer import Reviewer
 from anki.hooks import wrap
+import aqt
 
 from .utils import openChangelog
 from .utils.resource import readResource
 from .utils.JSEval import execJSFile
+from .utils.JSCallable import JSCallable
 
 js = readResource('js/main.min.js')
+
+@JSCallable
+def isActiveWindowAnki():
+    return aqt.mw.app.activeWindow() != None
 
 def afterInitWeb(self):
     self.web.eval(js)

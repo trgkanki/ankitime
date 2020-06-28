@@ -22,17 +22,16 @@ if (!window._atInitialized) {
     callbackTimer = setTimeout(() => {
       justPlay(alertAudio)
       alertPlaying = true
+      callbackTimer = null
     }, 30000)
   }
 
   function onFocus () {
-    if (callbackTimer !== null) {
-      clearTimeout(callbackTimer)
-      if (alertPlaying) {
-        alertAudio.pause()
-        justPlay(resumeAudio)
-        alertPlaying = false
-      }
+    if (callbackTimer !== null) clearTimeout(callbackTimer)
+    if (alertPlaying) {
+      alertAudio.pause()
+      justPlay(resumeAudio)
+      alertPlaying = false
     }
   }
 
