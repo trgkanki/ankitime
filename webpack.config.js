@@ -32,6 +32,14 @@ module.exports = {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.mp3$/i,
+        use: [
+          {
+            loader: 'url-loader'
+          }
+        ]
       }
     ]
   },
