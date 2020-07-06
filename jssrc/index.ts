@@ -10,7 +10,7 @@ if (!window._atInitialized) {
 
   let callbackTimer: number | null = null
   let alertPlaying = false
-  const alertAudio = new Audio(require('./sfx/alert.mp3').default)
+  let alertAudio = new Audio(require('./sfx/alert.mp3').default)
   const resumeAudio = new Audio(require('./sfx/resume.mp3').default)
 
   alertAudio.loop = true
@@ -40,4 +40,14 @@ if (!window._atInitialized) {
   }
 
   setVisibilityCallback(onFocus, onBlur)
+
+  window._atSetAlarmSoundUrl = function (url: string) {
+    const newAudio = new Audio(url)
+    newAudio.loop = true
+
+    // Replace!
+    alertAudio.pause()
+    alertAudio.remove()
+    alertAudio = newAudio
+  }
 }
