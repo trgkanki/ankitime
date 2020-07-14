@@ -2,6 +2,11 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 20.7.14i34 (2020-07-14)
+
+- Custom alarm sound. Check out the `alarmFile` key on alarm configuration.
+- Alarm on idle. When you're doing smartphone during review, ...
+
 ## 20.7.5i77 (2020-07-05)
 
 - Bug fix: audio sometimes not playing. (Issue #1) This was related to QWebEngine's autoplay policy. By default autoplay is disabled for webviews without user interactions, so alarm won't be played until user does something on the page. This has been fixed with proper configurations.
