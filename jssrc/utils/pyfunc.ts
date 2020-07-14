@@ -17,6 +17,7 @@ export function callPyFunc (
   return new Promise<any>((resolve, reject) => {
     const cmdstr = `pyfunc:${funcname}:${JSON.stringify(args)}`
     pycmd(cmdstr, (ret) => {
+      if (!ret) return reject(new Error(`Calling unknown pyfunc ${funcname}`))
       const error = ret.error as (string | null)
       if (error) return reject(new Error(error))
       else return resolve(ret.payload)

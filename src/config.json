@@ -1,3 +1,4 @@
 {
-  "alarmFile": ""
+  "alarmFile": "",
+  "runOnMobile": false
 }

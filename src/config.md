@@ -11,3 +11,7 @@ Path of custom alarm sound. Note that path in windows should be backslash-escape
 ```
 
 Just remember to replace all occurrence of `\` with `\\`.
+
+## runOnMobile (default: false)
+
+Also run the addon script on mobile environments (AnkiDroid currently supported).

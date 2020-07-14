@@ -7,7 +7,7 @@
 # See http://www.gnu.org/licenses/agpl.html
 
 from aqt.reviewer import Reviewer
-from anki.hooks import wrap
+from anki.hooks import wrap, addHook
 from aqt.qt import QWebEngineSettings
 import aqt
 import base64
@@ -18,6 +18,9 @@ from .utils import openChangelog
 from .utils.configrw import getConfig
 from .utils.resource import readResource
 from .utils.JSCallable import JSCallable
+from .mobileSupport.modelModifier import registerAnkiTimeScript
+
+addHook("profileLoaded", registerAnkiTimeScript)
 
 
 @JSCallable

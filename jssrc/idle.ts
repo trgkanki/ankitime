@@ -1,4 +1,8 @@
-const events = ['load', 'mousemove', 'mousedown', 'click', 'keydown']
+const events = [
+  'load', 'mousemove', 'mousedown', 'click', 'keydown',
+  'touchstart', 'touchmove'
+]
+
 let t: number | null = null
 let _isIdle = false
 
