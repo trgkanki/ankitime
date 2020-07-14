@@ -1,7 +1,7 @@
 import toastr from 'toastr'
 import 'toastr/build/toastr.css'
 
-import { setVisibilityCallback } from './visibility'
+import { setVisibilityCallback, registerVisibilityChecker } from './visibility'
 
 /* eslint no-inner-declarations:0 */
 
@@ -40,6 +40,7 @@ if (!window._atInitialized) {
   }
 
   setVisibilityCallback(onFocus, onBlur)
+  registerVisibilityChecker()
 
   window._atSetAlarmSoundUrl = function (url: string) {
     const newAudio = new Audio(url)

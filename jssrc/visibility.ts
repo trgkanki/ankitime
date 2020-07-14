@@ -1,7 +1,7 @@
 import { callPyFunc } from './utils/pyfunc'
 import { isIdle } from './idle'
 
-export type callback = () => void
+type callback = () => void
 
 let hasFocus = true
 let onFocus: callback | undefined
@@ -12,15 +12,17 @@ export function setVisibilityCallback (newOnFocus: callback, newOnBlur: callback
   onBlur = newOnBlur
 }
 
-setInterval(async () => {
-  const isAnkiActive = document.hasFocus() ? !isIdle() : await callPyFunc('isActiveWindowAnki')
+export function registerVisibilityChecker () {
+  setInterval(async () => {
+    const isAnkiActive = document.hasFocus() ? !isIdle() : await callPyFunc('isActiveWindowAnki')
 
-  if (isAnkiActive !== hasFocus) {
-    if (isAnkiActive) {
-      if (onFocus) onFocus()
-    } else {
-      if (onBlur) onBlur()
+    if (isAnkiActive !== hasFocus) {
+      if (isAnkiActive) {
+        if (onFocus) onFocus()
+      } else {
+        if (onBlur) onBlur()
+      }
+      hasFocus = isAnkiActive
     }
-    hasFocus = isAnkiActive
-  }
-}, 500)
+  }, 500)
+}
