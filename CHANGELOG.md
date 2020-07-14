@@ -2,6 +2,10 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 20.7.14i71 (2020-07-14)
+
+Hotfix: addon not starting after update
+
 ## 20.7.14i34 (2020-07-14)
 
 - Custom alarm sound. Check out the `alarmFile` key on alarm configuration.
