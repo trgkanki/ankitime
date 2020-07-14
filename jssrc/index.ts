@@ -21,9 +21,11 @@ if (!window._atInitialized) {
     audioElement.play()
   }
 
+  let alertAudioInterval: number | null = null
   function onBlur () {
     callbackTimer = setTimeout(() => {
       justPlay(alertAudio)
+      alertAudioInterval = setInterval(() => alertAudio.play(), 10000)
       alertPlaying = true
       callbackTimer = null
     }, 30000)
@@ -32,6 +34,10 @@ if (!window._atInitialized) {
   function onFocus () {
     if (callbackTimer !== null) clearTimeout(callbackTimer)
     if (alertPlaying) {
+      if (alertAudioInterval !== null) {
+        clearInterval(alertAudioInterval)
+        alertAudioInterval = null
+      }
       alertAudio.pause()
       justPlay(resumeAudio)
       alertPlaying = false
@@ -47,6 +53,10 @@ if (!window._atInitialized) {
     newAudio.loop = true
 
     // Replace!
+    if (alertAudioInterval !== null) {
+      clearInterval(alertAudioInterval)
+      alertAudioInterval = null
+    }
     alertAudio.pause()
     alertAudio.remove()
     alertAudio = newAudio
