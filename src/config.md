@@ -2,15 +2,9 @@
 
 ## alarmFile (default: "")
 
-Path of custom alarm sound. Note that path in windows should be backslash-escaped, as denoted on [JSON spec](https://www.json.org/) For example, path `C:\Users\whyask37\music.mp3` becomes
+Path of custom alarm sound. Note that path in windows should be backslash-escaped, as denoted on [JSON spec](https://www.json.org/) For example, path `C:\Users\whyask37\music.mp3` becomes `"alarmFile": "C:\\Users\\whyask37\\music.mp3"`. Just remember to replace all occurrence of `\` with `\\`.
 
-```json
-{
-  "alarmFile": "C:\\Users\\whyask37\\music.mp3"
-}
-```
-
-Just remember to replace all occurrence of `\` with `\\`.
+Note that if the file is mp3 file, the same file will also be used on AnkiDroid environments.
 
 ## runOnMobile (default: false)
 

@@ -16,7 +16,7 @@ import mimetypes
 
 from .utils import openChangelog
 from .utils.configrw import getConfig
-from .utils.resource import readResource
+from .utils.resource import readResource, updateMedia
 from .utils.JSCallable import JSCallable
 from .mobileSupport.modelModifier import registerAnkiTimeScript
 
@@ -33,17 +33,24 @@ def afterInitWeb(self):
     self.web.settings().setAttribute(
         QWebEngineSettings.PlaybackRequiresUserGesture, False
     )
+    updateMedia("_at_alert.mp3", readResource("sfx/alert.mp3", binary=True), False)
+    updateMedia("_at_resume.mp3", readResource("sfx/resume.mp3", binary=True), False)
 
     def cb2(res):
         if getConfig("idleAlarm"):
             self.web.eval("window._atInstance.enableIdleAlarm(true)")
 
-        if getConfig("alarmFile"):
-            fname = getConfig("alarmFile")
+        fname = getConfig("alarmFile")
+        if fname and os.path.isfile(fname):
             with open(fname, "rb") as f:
                 content = f.read()
             mimetype = mimetypes.guess_type(fname)[0]
-            if mimetype:
+
+            if mimetype == "audio/mpeg":
+                updateMedia("_at_alert.mp3", content)
+                # Reload _at_alert.mp3 on JS side
+                self.web.eval(f'window._atInstance.setAlarmSound("_at_alert.mp3")')
+            else:
                 b64 = base64.b64encode(content).decode("ascii")
                 dataURI = f"data:{mimetype};base64,{b64}"
                 self.web.eval(f'window._atInstance.setAlarmSound("{dataURI}")')

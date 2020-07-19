@@ -3,7 +3,7 @@ import os
 from aqt import mw
 
 from .markerReplacer import ReplaceBlock, removeReplaceBlock
-from ..utils.resource import readResource
+from ..utils.resource import readResource, updateMedia
 from ..utils.configrw import getConfig
 
 ############################# Templates
@@ -29,19 +29,6 @@ def applyScriptBlock(template, key, updated):
 ###################################################################
 
 
-def updateMedia(col, name, newData):
-    media = col.media
-    targetFile = os.path.join(media.dir(), name)
-
-    if os.path.exists(targetFile):
-        with open(targetFile, "rb") as f:
-            if f.read() == newData:
-                return  # Identical data already exists
-        os.unlink(targetFile)
-
-    col.media.writeData(name, newData)
-
-
 MODE_SET = "set"
 MODE_UNSET = "unset"
 
@@ -51,9 +38,7 @@ def registerAnkiTimeScript():
 
     if getConfig("runOnMobile"):
         mode = MODE_SET
-        updateMedia(
-            col, mediaScriptPath, readResource("js/main.min.js").encode("utf-8")
-        )
+        updateMedia(mediaScriptPath, readResource("js/main.min.js").encode("utf-8"))
     else:
         mode = MODE_UNSET
         # Should we remove the media? I don't really think so :(

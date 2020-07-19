@@ -11,8 +11,8 @@ function justPlay (audioElement: HTMLAudioElement) {
 export class ATInstance {
   callbackTimer: number | null = null
   alertPlaying = false
-  alertAudio = new Audio(require('./sfx/alert.mp3').default)
-  resumeAudio = new Audio(require('./sfx/resume.mp3').default)
+  alertAudio = new Audio('_at_alert.mp3')
+  resumeAudio = new Audio('_at_resume.mp3')
   alertAudioInterval: number | null = null
   _activityTracker: ActivityTracker
 
