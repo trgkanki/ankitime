@@ -1,4 +1,5 @@
 {
   "alarmFile": "",
-  "runOnMobile": false
+  "runOnMobile": false,
+  "idleAlarm": true
 }

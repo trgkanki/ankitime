@@ -35,6 +35,9 @@ def afterInitWeb(self):
     )
 
     def cb2(res):
+        if getConfig("idleAlarm"):
+            self.web.eval("window._atInstance.enableIdleAlarm(true)")
+
         if getConfig("alarmFile"):
             fname = getConfig("alarmFile")
             with open(fname, "rb") as f:

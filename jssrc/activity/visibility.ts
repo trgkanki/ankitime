@@ -7,7 +7,7 @@ type callback = () => void
 export async function isActiveWindowAnki (trackIdle: boolean) {
   if (isMobile()) return !document.hidden
   if (document.hasFocus()) {
-    if (trackIdle) return isIdle()
+    if (trackIdle) return !isIdle()
     else return true
   }
   try {

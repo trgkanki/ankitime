@@ -19,7 +19,7 @@ export class ATInstance {
   constructor () {
     this.alertAudio.loop = true
     this._activityTracker = new ActivityTracker()
-    this._activityTracker.trackIdle = true // TODO: send this to options
+    this._activityTracker.trackIdle = false
     this._activityTracker.onFocus = this._onFocus.bind(this)
     this._activityTracker.onBlur = this._onBlur.bind(this)
   }

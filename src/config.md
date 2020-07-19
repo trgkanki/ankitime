@@ -15,3 +15,10 @@ Just remember to replace all occurrence of `\` with `\\`.
 ## runOnMobile (default: false)
 
 Also run the addon script on mobile environments (AnkiDroid currently supported).
+
+## idleAlarm (default: true)
+
+By default, addon tracks whether you're idling with Anki open. Addon tracks your mouse and keyboard status to check the activity, but this is known to interfering with people not using mouse/keyboard for reviews. See [this github issue](https://github.com/trgkanki/ankitime/issues/5) for more info.
+
+This option only affects desktop environments.
+
