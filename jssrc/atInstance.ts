@@ -24,6 +24,21 @@ export class ATInstance {
     this._activityTracker.onBlur = this._onBlur.bind(this)
   }
 
+  dispose () {
+    // TODO: refactor constructor-dispose cycle.
+    this._activityTracker.dispose()
+    this.alertAudio.pause()
+    this.resumeAudio.pause()
+    if (this.alertAudioInterval) {
+      clearInterval(this.alertAudioInterval)
+      this.alertAudioInterval = null
+    }
+    if (this.callbackTimer) {
+      clearTimeout(this.callbackTimer)
+      this.callbackTimer = null
+    }
+  }
+
   private _onBlur () {
     this.callbackTimer = setTimeout(() => {
       justPlay(this.alertAudio)

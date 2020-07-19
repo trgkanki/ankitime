@@ -9,6 +9,7 @@
 from aqt.reviewer import Reviewer
 from anki.hooks import wrap, addHook
 from aqt.qt import QWebEngineSettings
+from aqt import AnkiQt
 import aqt
 import base64
 import os
@@ -59,3 +60,17 @@ def afterInitWeb(self):
 
 
 Reviewer._initWeb = wrap(Reviewer._initWeb, afterInitWeb, "after")
+
+
+# Fixes issue #3
+# Anki doesn't cleanly dispose child widgets when exiting the program.
+# This code forces disposal
+
+
+def disposeAnkiTime(self, _old):
+    self.web.evalWithCallback("window._atInstance.dispose();", lambda res: _old(self))
+
+
+AnkiQt.unloadProfileAndExit = wrap(
+    AnkiQt.unloadProfileAndExit, disposeAnkiTime, "around"
+)
