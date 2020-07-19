@@ -1,7 +1,6 @@
+import { ActivityTracker } from './activity/index'
 import toastr from 'toastr'
 import 'toastr/build/toastr.css'
-
-import { setVisibilityCallback, registerVisibilityChecker } from './visibility'
 
 function justPlay (audioElement: HTMLAudioElement) {
   audioElement.pause()
@@ -15,14 +14,17 @@ export class ATInstance {
   alertAudio = new Audio(require('./sfx/alert.mp3').default)
   resumeAudio = new Audio(require('./sfx/resume.mp3').default)
   alertAudioInterval: number | null = null
+  _activityTracker: ActivityTracker
 
   constructor () {
     this.alertAudio.loop = true
-    setVisibilityCallback(this.onFocus.bind(this), this.onBlur.bind(this))
-    registerVisibilityChecker()
+    this._activityTracker = new ActivityTracker()
+    this._activityTracker.trackIdle = true // TODO: send this to options
+    this._activityTracker.onFocus = this._onFocus.bind(this)
+    this._activityTracker.onBlur = this._onBlur.bind(this)
   }
 
-  onBlur () {
+  private _onBlur () {
     this.callbackTimer = setTimeout(() => {
       justPlay(this.alertAudio)
       this.alertAudioInterval = setInterval(() => this.alertAudio.play(), 10000)
@@ -31,7 +33,7 @@ export class ATInstance {
     }, 30000)
   }
 
-  onFocus () {
+  private _onFocus () {
     if (this.callbackTimer !== null) clearTimeout(this.callbackTimer)
     if (this.alertPlaying) {
       if (this.alertAudioInterval !== null) {
@@ -43,6 +45,11 @@ export class ATInstance {
       this.alertPlaying = false
       toastr.info('Resuming reviews...')
     }
+  }
+
+  // Public API
+  enableIdleAlarm (enabled: boolean) {
+    this._activityTracker.trackIdle = enabled
   }
 
   setAlarmSound (url: string) {
