@@ -2,6 +2,13 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 20.7.19i74 (2020-07-19)
+
+- Bug fix: Alarm should stop on app exit.
+- Feature: option to disable *idle alarm*. Check `idleAlarm` option on the addon config.
+- Feature: Basic AnkiDroid support. Not yet tested on AnkiMobile, and maybe won't be supported, as apple don't like
+  background script running without explicit permission.
+
 ## 20.7.14i71 (2020-07-14)
 
 Hotfix: addon not starting after update
