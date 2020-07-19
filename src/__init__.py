@@ -43,7 +43,7 @@ def afterInitWeb(self):
             if mimetype:
                 b64 = base64.b64encode(content).decode("ascii")
                 dataURI = f"data:{mimetype};base64,{b64}"
-                self.web.eval(f'window._atSetAlarmSoundUrl("{dataURI}")')
+                self.web.eval(f'window._atInstance.setAlarmSound("{dataURI}")')
 
     self.web.evalWithCallback(js, cb2)
 
