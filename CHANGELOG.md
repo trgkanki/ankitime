@@ -2,6 +2,11 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 20.7.20i40 (2020-07-20)
+
+- Bugfix: addon not working on first install. This issue was due to how
+  addon checks its current version.
+
 ## 20.7.19i74 (2020-07-19)
 
 - Bug fix: Alarm should stop on app exit.
