@@ -19,9 +19,9 @@ from .utils import openChangelog
 from .utils.configrw import getConfig
 from .utils.resource import readResource, updateMedia
 from .utils.JSCallable import JSCallable
-from .mobileSupport.modelModifier import registerAnkiTimeScript
+from .mobileSupport.modelModifier import registerMobileScript
 
-addHook("profileLoaded", registerAnkiTimeScript)
+addHook("profileLoaded", registerMobileScript)
 
 
 @JSCallable

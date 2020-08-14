@@ -1,4 +1,5 @@
 import os
+import re
 
 from aqt import mw
 
@@ -17,13 +18,14 @@ scriptBlock = ReplaceBlock(
 )
 
 
-def applyScriptBlock(template, key, updated):
+def applyScriptBlock(template, key, updated=None):
     orig = template[key]
     fieldUpdated = [False]
     new = scriptBlock.apply(orig, updated=fieldUpdated)
     if fieldUpdated[0]:
         template[key] = new
-        updated[0] = True
+        if updated:
+            updated[0] = True
 
 
 ###################################################################
@@ -33,7 +35,7 @@ MODE_SET = "set"
 MODE_UNSET = "unset"
 
 
-def registerAnkiTimeScript():
+def registerMobileScript():
     col = mw.col
 
     if getConfig("runOnMobile"):
@@ -51,31 +53,32 @@ def updateModels(col, mode):
     templateUpdated = [False]
     for model in col.models.all():
         for template in model["tmpls"]:
+            oldqfmt = template["qfmt"]
+            oldafmt = template["afmt"]
+
             if mode == MODE_SET:
-                applyScriptBlock(template, "qfmt", templateUpdated)
+                applyScriptBlock(template, "qfmt")
                 if "{{FrontSide}}" not in template["afmt"]:
-                    applyScriptBlock(template, "afmt", templateUpdated)
+                    applyScriptBlock(template, "afmt")
                 else:
                     template["afmt"] = removeReplaceBlock(
-                        template["afmt"],
-                        scriptBlock.startMarker,
-                        scriptBlock.endMarker,
-                        updated=templateUpdated,
+                        template["afmt"], scriptBlock.startMarker, scriptBlock.endMarker
                     )
 
             else:
                 template["qfmt"] = removeReplaceBlock(
-                    template["qfmt"],
-                    scriptBlock.startMarker,
-                    scriptBlock.endMarker,
-                    updated=templateUpdated,
+                    template["qfmt"], scriptBlock.startMarker, scriptBlock.endMarker
                 )
                 template["afmt"] = removeReplaceBlock(
-                    template["afmt"],
-                    scriptBlock.startMarker,
-                    scriptBlock.endMarker,
-                    updated=templateUpdated,
+                    template["afmt"], scriptBlock.startMarker, scriptBlock.endMarker
                 )
+
+        template["qfmt"] = template["qfmt"].replace("\r", "\n")
+        template["qfmt"] = re.sub(r"\n{3,}", "\n\n", template["qfmt"])
+        template["afmt"] = template["afmt"].replace("\r", "\n")
+        template["afmt"] = re.sub(r"\n{3,}", "\n\n", template["afmt"])
+        if not (template["qfmt"] == oldqfmt and template["afmt"] == oldafmt):
+            templateUpdated[0] = True
 
     if templateUpdated[0]:
         models.save()
