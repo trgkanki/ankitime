@@ -68,7 +68,9 @@ Reviewer._initWeb = wrap(Reviewer._initWeb, afterInitWeb, "after")
 
 
 def disposeAnkiTime(self, _old):
-    self.web.evalWithCallback("window._atInstance.dispose();", lambda res: _old(self))
+    self.web.evalWithCallback(
+        "if (window._atInstance) window._atInstance.dispose();", lambda res: _old(self)
+    )
 
 
 AnkiQt.unloadProfileAndExit = wrap(
