@@ -11,9 +11,9 @@ from ..utils.configrw import getConfig
 mediaScriptPath = "_ankitime.min.js"
 
 scriptBlock = ReplaceBlock(
-    "<!-- # 5d76369d98ea0c92 -->\n",
+    "<!-- # 5d76369d98ea0c92 -->",
     "<!-- / 5d76369d98ea0c92 -->",
-    f'<script src="{mediaScriptPath}"></script>\n',
+    f'<script src="{mediaScriptPath}"></script>',
 )
 
 
