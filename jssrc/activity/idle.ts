@@ -33,7 +33,7 @@ function resetIdleTimer () {
 }
 
 for (const ev of events) {
-  window.addEventListener(ev, resetIdleTimer)
+  window.addEventListener(ev, resetIdleTimer, true)
 }
 
 resetIdleTimer()
