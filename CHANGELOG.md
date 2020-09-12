@@ -2,6 +2,16 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 20.9.12i228 (2020-09-13)
+
+This is mainly a maintenance update. It doesn't not actually affect addon behavior, but may help if you were having
+performance issues.
+
+- Feature: now addon resets alarm to its default when no `alarmFile` is set.
+- Fix: multiple CSS import issue
+- Fix: possible js exception (polluting debugger)
+- Fix: removed excessive `console.log`. It were used for debugging, but somehow sneaked into production code.
+
 ## 20.7.20i40 (2020-07-20)
 
 - Bugfix: addon not working on first install. This issue was due to how

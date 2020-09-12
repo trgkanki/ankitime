@@ -3,6 +3,11 @@
 <head>
 <title>Changelog of ankitime</title>
 <style>
+html,
+body {
+  background-color: #fff;
+}
+
 .container {
   max-width: 1080px;
   margin: auto;
@@ -999,6 +1004,15 @@
 <body>
 <div class='container markdown-body'>
 <h1 id="changelog-of-ankitime">Changelog of ankitime</h1>
+<h2 id="20912i228-2020-09-13">20.9.12i228 (2020-09-13)</h2>
+<p>This is mainly a maintenance update. It doesn&#39;t not actually affect addon behavior, but may help if you were having
+performance issues.</p>
+<ul>
+<li>Feature: now addon resets alarm to its default when no <code>alarmFile</code> is set.</li>
+<li>Fix: multiple CSS import issue</li>
+<li>Fix: possible js exception (polluting debugger)</li>
+<li>Fix: removed excessive <code>console.log</code>. It were used for debugging, but somehow sneaked into production code.</li>
+</ul>
 <h2 id="20720i40-2020-07-20">20.7.20i40 (2020-07-20)</h2>
 <ul>
 <li>Bugfix: addon not working on first install. This issue was due to how
