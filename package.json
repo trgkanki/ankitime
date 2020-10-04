@@ -1,5 +1,5 @@
 {
-  "name": "addon_template",
+  "name": "ankitime",
   "version": "20.9.12i228",
   "description": "template for trgkanki's addon",
   "scripts": {
