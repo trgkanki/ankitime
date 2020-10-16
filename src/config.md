@@ -16,3 +16,8 @@ By default, addon tracks whether you're idling with Anki open. Addon tracks your
 
 This option only affects desktop environments.
 
+## idleTimerTime (default: 30)
+
+How much time to allow idle/non-Anking.
+
+> Note: When setting this value to `0`, I recommend setting `idleAlarm` to `false`. Or it would ring alarm forever when you're doing reviews on the desktop.

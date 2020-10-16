@@ -16,6 +16,7 @@
 import { ActivityTracker } from './activity/index'
 import toastr from 'toastr'
 import 'toastr/build/toastr.css'
+import { getAddonConfig } from './utils/addonConfig'
 
 function justPlay (audioElement: HTMLAudioElement) {
   audioElement.pause()
@@ -54,13 +55,14 @@ export class ATInstance {
     }
   }
 
-  private _onBlur () {
+  private async _onBlur () {
+    const timeoutTimer = Number(await getAddonConfig('idleTimerTime')) * 1000
     this.callbackTimer = setTimeout(() => {
       justPlay(this.alertAudio)
       this.alertAudioInterval = setInterval(() => this.alertAudio.play(), 10000)
       this.alertPlaying = true
       this.callbackTimer = null
-    }, 30000)
+    }, timeoutTimer)
   }
 
   private _onFocus () {

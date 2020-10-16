@@ -1,5 +1,6 @@
 {
   "alarmFile": "",
   "runOnMobile": false,
-  "idleAlarm": true
+  "idleAlarm": true,
+  "idleTimerTime": 30
 }
