@@ -37,7 +37,7 @@ export class ATInstance {
     this._activityTracker = new ActivityTracker()
     this._activityTracker.trackIdle = false
     this._activityTracker.onFocus = this._onFocus.bind(this)
-    this._activityTracker.onBlur = this._onBlur.bind(this)
+    this._activityTracker.onIdle = this._onIdle.bind(this)
   }
 
   dispose () {
@@ -55,7 +55,7 @@ export class ATInstance {
     }
   }
 
-  private async _onBlur () {
+  private async _onIdle () {
     const timeoutTimer = Number(await getAddonConfig('idleTimerTime')) * 1000
     this.callbackTimer = setTimeout(() => {
       justPlay(this.alertAudio)

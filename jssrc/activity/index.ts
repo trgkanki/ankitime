@@ -40,7 +40,7 @@ export class ActivityTracker {
   // Configuration API
   trackIdle = false
   onFocus: callback | undefined
-  onBlur: callback | undefined
+  onIdle: callback | undefined
 
   // Updater
   async _updateActivityStatus () {
@@ -50,7 +50,7 @@ export class ActivityTracker {
       if (isAnkiActive) {
         if (this.onFocus) (this.onFocus)()
       } else {
-        if (this.onBlur) (this.onBlur)()
+        if (this.onIdle) (this.onIdle)()
       }
       this._wasActive = isAnkiActive
     }
