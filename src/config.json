@@ -2,5 +2,6 @@
   "alarmFile": "",
   "runOnMobile": false,
   "idleAlarm": true,
-  "idleTimerTime": 30
+  "idleTimerTime": 30,
+  "resumeFeedback": true
 }

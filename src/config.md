@@ -21,3 +21,7 @@ This option only affects desktop environments.
 How much time to allow idle/non-Anking.
 
 > Note: When setting this value to `0`, I recommend setting `idleAlarm` to `false`. Or it would ring alarm forever when you're doing reviews on the desktop.
+
+## resumeFeedback (default: true)
+
+Whether to play sound on resume. Keep this off if you're distracted by frequent loud noises.

@@ -73,7 +73,11 @@ export class ATInstance {
         this.alertAudioInterval = null
       }
       this.alertAudio.pause()
-      justPlay(this.resumeAudio)
+      getAddonConfig('resumeFeedback').then(res => {
+        if (res) {
+          justPlay(this.resumeAudio)
+        }
+      })
       this.alertPlaying = false
       toastr.info('Resuming reviews...')
     }
