@@ -33,6 +33,7 @@ import mimetypes
 
 from .utils import openChangelog
 from .utils import uuid  # duplicate UUID checked here
+from .utils import debugLog  # debug log registered here
 from .utils.configrw import getConfig
 from .utils.resource import readResource, updateMedia
 from .utils.JSCallable import JSCallable

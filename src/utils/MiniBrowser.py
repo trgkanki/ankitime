@@ -50,9 +50,6 @@ class MiniBrowser(QDialog):
     silentlyClose = True
 
     def __init__(self, parent, rootHtmlPath, size=None):
-        if parent is None:
-            parent = mw
-
         super().__init__(parent)
         mw.setupDialogGC(self)
 
