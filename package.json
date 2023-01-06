@@ -1,6 +1,6 @@
 {
   "name": "ankitime",
-  "version": "20.9.12i228",
+  "version": "23.1.6i116",
   "description": "template for trgkanki's addon",
   "scripts": {
     "postinstall": "python3 -m pip install -r requirements.txt",

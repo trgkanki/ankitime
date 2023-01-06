@@ -2,6 +2,11 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 23.1.6i116 (2023-01-06)
+
+- "resumeFeedback" option added
+- "idleTimerTime" option added
+
 ## 20.9.12i228 (2020-09-13)
 
 This is mainly a maintenance update. It doesn't not actually affect addon behavior, but may help if you were having
