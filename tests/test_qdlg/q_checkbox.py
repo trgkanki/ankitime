@@ -19,37 +19,48 @@ from qdlgproxy import (  # type: ignore
     Text,
     LineEdit,
     Button,
+    CheckBox,
+    HStack,
     Table,
     Tr,
     Td,
-    Group,
 )
-from PyQt5.Qt import QApplication
+from aqt.qt import QApplication
+
+
+class TestClass:
+    def __init__(self):
+        self.checked1 = False
 
 
 @QDlg("Table test")
 def qDlgClass(dlg):
-    with Group("Login box"):
-        with Table():
-            with Tr():
-                with Td():
-                    Text("Username")
-                with Td():
-                    username = LineEdit()
+    with Table():
+        with Tr():
+            with Td():
+                Text("Username")
+            with Td():
+                username = LineEdit()
 
-            with Tr():
-                with Td():
-                    Text("Password")
-                with Td():
-                    password = LineEdit().passwordInput()
+        with Tr():
+            with Td():
+                Text("Password")
+            with Td():
+                password = LineEdit().passwordInput()
 
-            with Tr():
-                with Td(colspan=2):
-                    (
-                        Button("Login")
-                        .onClick(lambda: print(username.text(), password.text()))
-                        .default()
-                    )
+        with Tr():
+            with Td(colspan=2):
+                with HStack():
+                    Text("Remember me?")
+                    CheckBox()
+
+        with Tr():
+            with Td(colspan=2):
+                (
+                    Button("Login")
+                    .onClick(lambda: print(username.text(), password.text()))
+                    .default()
+                )
 
 
 if __name__ == "__main__":

@@ -14,20 +14,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from qdlgproxy import QDlg, Text, Button  # type: ignore
-from PyQt5.Qt import QApplication, QMessageBox
+from qdlgproxy import (  # type: ignore
+    QDlg,
+    Button,
+    HStack,
+)
+from aqt.qt import QApplication
+
+style = """
+    QPushButton {
+        margin: 50px;
+    }
+"""
 
 
-@QDlg("Test dialog", size=[640, 480])
+@QDlg("OK/reject test")
 def qDlgClass(dlg):
-    Text("Hello world!")
-
-    def onClick():
-        QMessageBox.warning(
-            None, "test msgbox", "content",
-        )
-
-    Button("Hello world!").onClick(onClick)
+    dlg.setStyleSheet(style)
+    with HStack():
+        Button("OK").onClick(dlg.accept).style(style)
+        Button("Cancel").onClick(dlg.reject).style("padding: 30px;")
 
 
 if __name__ == "__main__":

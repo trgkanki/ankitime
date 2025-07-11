@@ -13,19 +13,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# flake8: noqa
+
 import sys
-from qdlgproxy import QDlg, Text, LineEdit  # type: ignore
-from PyQt5.Qt import QApplication
+import os
 
+sys.path.insert(
+    1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src/qdlg"))
+)
 
-@QDlg("LineEdit test dialog", size=[640, 480])
-def qDlgClass(dlg):
-    Text("Hello world!")
-    LineEdit().onInput(lambda s: print("onInput", s)).onChange(
-        lambda s: print("onChange", s)
-    )
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    qDlgClass.run()
+from observable import *  # NOQA

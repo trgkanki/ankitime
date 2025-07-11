@@ -50,7 +50,7 @@ def isActiveWindowAnki():
 def afterInitWeb(self):
     js = readResource("js/main.min.js")
     self.web.settings().setAttribute(
-        QWebEngineSettings.PlaybackRequiresUserGesture, False
+        QWebEngineSettings.WebAttribute.PlaybackRequiresUserGesture, False
     )
     updateMedia("_at_resume.mp3", readResource("sfx/resume.mp3", binary=True), False)
 

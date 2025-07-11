@@ -14,26 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from qdlgproxy import (  # type: ignore
-    QDlg,
-    Button,
-    HStack,
-)
-from PyQt5.Qt import QApplication
-
-style = """
-    QPushButton {
-        margin: 50px;
-    }
-"""
+from qdlgproxy import QDlg, Text, LineEdit  # type: ignore
+from aqt.qt import QApplication
 
 
-@QDlg("OK/reject test")
+@QDlg("LineEdit test dialog", size=[640, 480])
 def qDlgClass(dlg):
-    dlg.setStyleSheet(style)
-    with HStack():
-        Button("OK").onClick(dlg.accept).style(style)
-        Button("Cancel").onClick(dlg.reject).style("padding: 30px;")
+    Text("Hello world!")
+    LineEdit().onInput(lambda s: print("onInput", s)).onChange(
+        lambda s: print("onChange", s)
+    )
 
 
 if __name__ == "__main__":

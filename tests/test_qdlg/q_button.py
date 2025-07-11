@@ -14,20 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-from qdlgproxy import (  # type: ignore
-    QDlg,
-    RadioButton,
-)
-from PyQt5.Qt import QApplication
+from qdlgproxy import QDlg, Text, Button  # type: ignore
+from aqt.qt import QApplication, QMessageBox
 
 
-@QDlg("Table test")
+@QDlg("Test dialog", size=[640, 480])
 def qDlgClass(dlg):
-    def onSelect(v):
-        print("%s selected" % v)
+    Text("Hello world!")
 
-    RadioButton("Male", value=0).onSelect(onSelect)
-    RadioButton("Female", value=1).onSelect(onSelect)
+    def onClick():
+        QMessageBox.warning(
+            None,
+            "test msgbox",
+            "content",
+        )
+
+    Button("Hello world!").onClick(onClick)
 
 
 if __name__ == "__main__":

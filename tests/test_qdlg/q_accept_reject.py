@@ -13,13 +13,26 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# flake8: noqa
-
 import sys
-import os
-
-sys.path.insert(
-    1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../qdlg"))
+from qdlgproxy import (  # type: ignore
+    QDlg,
+    Button,
 )
+from aqt.qt import QApplication
 
-from observable import *  # NOQA
+
+@QDlg("OK/reject test")
+def qDlgClass(dlg):
+    Button("OK").onClick(dlg.accept)
+    Button("Cancel").onClick(dlg.reject)
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    print(qDlgClass.run())
+    print(qDlgClass.run())
+
+
+def test_wrong():
+    ## This test shouldn't be run by nosetests
+    assert False
