@@ -22,10 +22,11 @@
 # See http://www.gnu.org/licenses/agpl.html
 
 from aqt.reviewer import Reviewer
-from anki.hooks import wrap, addHook
+from anki.hooks import wrap
 from aqt.qt import QWebEngineSettings
 from aqt.utils import showInfo
-from aqt import AnkiQt
+from aqt import AnkiQt, mw
+from aqt import gui_hooks
 import aqt
 import base64
 import os
@@ -39,7 +40,7 @@ from .utils.resource import readResource, updateMedia
 from .utils.JSCallable import JSCallable
 from .mobileSupport.modelModifier import registerMobileScript
 
-addHook("profileLoaded", registerMobileScript)
+gui_hooks.profile_did_open.append(registerMobileScript)
 
 
 @JSCallable
@@ -47,16 +48,17 @@ def isActiveWindowAnki():
     return aqt.mw.app.activeWindow() != None
 
 
-def afterInitWeb(self):
+def afterInitWeb(card):
+    reviewer = mw.reviewer
     js = readResource("js/main.min.js")
-    self.web.settings().setAttribute(
+    reviewer.web.settings().setAttribute(
         QWebEngineSettings.WebAttribute.PlaybackRequiresUserGesture, False
     )
     updateMedia("_at_resume.mp3", readResource("sfx/resume.mp3", binary=True), False)
 
     def cb2(res):
         if getConfig("idleAlarm"):
-            self.web.eval("window._atInstance.enableIdleAlarm(true)")
+            reviewer.web.eval("window._atInstance.enableIdleAlarm(true)")
 
         fname = getConfig("alarmFile")
         if fname:
@@ -71,11 +73,13 @@ def afterInitWeb(self):
                 if mimetype == "audio/mpeg":
                     updateMedia("_at_alert.mp3", content)
                     # Reload _at_alert.mp3 on JS side
-                    self.web.eval(f'window._atInstance.setAlarmSound("_at_alert.mp3")')
+                    reviewer.web.eval(
+                        f'window._atInstance.setAlarmSound("_at_alert.mp3")'
+                    )
                 else:
                     b64 = base64.b64encode(content).decode("ascii")
                     dataURI = f"data:{mimetype};base64,{b64}"
-                    self.web.eval(f'window._atInstance.setAlarmSound("{dataURI}")')
+                    reviewer.web.eval(f'window._atInstance.setAlarmSound("{dataURI}")')
             else:
                 showInfo('[Anki Time] unknown file "%s"' % fname)
 
@@ -84,10 +88,11 @@ def afterInitWeb(self):
                 "_at_alert.mp3", readResource("sfx/alert.mp3", binary=True), True
             )
 
-    self.web.evalWithCallback(js, cb2)
+    reviewer.web.evalWithCallback(js, cb2)
 
 
-Reviewer._initWeb = wrap(Reviewer._initWeb, afterInitWeb, "after")
+gui_hooks.reviewer_did_show_question.append(afterInitWeb)
+gui_hooks.reviewer_did_show_answer.append(afterInitWeb)
 
 
 # Fixes issue #3
@@ -97,7 +102,8 @@ Reviewer._initWeb = wrap(Reviewer._initWeb, afterInitWeb, "after")
 
 def disposeAnkiTime(self, _old):
     self.web.evalWithCallback(
-        "if (window._atInstance) window._atInstance.dispose();", lambda res: _old(self)
+        "if (window._atInstance) { window._atInstance.dispose(); window._atInstance = null; }",
+        lambda res: _old(self),
     )
 
 

@@ -17,4 +17,6 @@ if (!window._atInstance) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { ATInstance } = require('./atInstance')
   window._atInstance = new ATInstance()
+} else {
+  window._atInstance.resetIdleTimer()
 }
