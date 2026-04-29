@@ -15,14 +15,12 @@
 
 import { callPyFunc } from '../utils/pyfunc'
 import isMobile from 'is-mobile'
-import { isIdle } from './idle'
+import { IdleTracker } from './idle'
 
-type callback = () => void
-
-export async function isActiveWindowAnki (trackIdle: boolean) {
+export async function isActiveWindowAnki (idleTracker: IdleTracker | null) {
   if (isMobile()) return !document.hidden
   if (document.hasFocus()) {
-    if (trackIdle) return !isIdle()
+    if (idleTracker) return !idleTracker.isIdle()
     else return true
   }
   try {

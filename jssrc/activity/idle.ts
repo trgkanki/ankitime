@@ -18,26 +18,41 @@ const events = [
   'touchstart', 'touchmove'
 ]
 
-let t: number | null = null
-let _isIdle = false
+export class IdleTracker {
+  t: number | null
+  _isIdle: boolean
 
-function onIdleTimer () {
-  _isIdle = true
-  t = null
-}
+  constructor () {
+    this.t = null
+    this._isIdle = false
 
-function resetIdleTimer () {
-  _isIdle = false
-  if (t !== null) clearTimeout(t)
-  t = setTimeout(onIdleTimer, 1000)
-}
+    for (const ev of events) {
+      window.addEventListener(ev, this.resetIdleTimer, true)
+    }
 
-for (const ev of events) {
-  window.addEventListener(ev, resetIdleTimer, true)
-}
+    this.resetIdleTimer()
+  }
 
-resetIdleTimer()
+  dispose () {
+    for (const ev of events) {
+      window.removeEventListener(ev, this.resetIdleTimer)
+    }
+  }
 
-export function isIdle () {
-  return _isIdle
+  private onIdleTimer () {
+    this._isIdle = true
+    if (this.t !== null) clearTimeout(this.t)
+    this.t = null
+  }
+
+  resetIdleTimer () {
+    // console.log(e)
+    this._isIdle = false
+    if (this.t !== null) clearTimeout(this.t)
+    this.t = setTimeout(this.onIdleTimer, 5000)
+  }
+
+  isIdle () {
+    return this._isIdle
+  }
 }

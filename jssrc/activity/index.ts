@@ -13,20 +13,15 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import { isActiveWindowAnki } from './visibility'
-
 type callback = () => void
 
-function currentTime () {
-  return (new Date()).getTime()
-}
-
 export class ActivityTracker {
-  private _lastActiveTime = currentTime()
   private _updateInterval: number
   private _wasActive = true
+  private _activityCheckCallback: () => Promise<boolean>
 
-  constructor () {
+  constructor (activityCheckCallback: () => Promise<boolean>) {
+    this._activityCheckCallback = activityCheckCallback
     this._updateInterval = setInterval(
       this._updateActivityStatus.bind(this),
       500
@@ -44,7 +39,7 @@ export class ActivityTracker {
 
   // Updater
   async _updateActivityStatus () {
-    const isAnkiActive = await isActiveWindowAnki(this.trackIdle)
+    const isAnkiActive = await this._activityCheckCallback()
 
     if (isAnkiActive !== this._wasActive) {
       if (isAnkiActive) {

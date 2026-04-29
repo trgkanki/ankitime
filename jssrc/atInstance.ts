@@ -17,6 +17,8 @@ import { ActivityTracker } from './activity/index'
 import toastr from 'toastr'
 import 'toastr/build/toastr.css'
 import { getAddonConfig } from './utils/addonConfig'
+import { IdleTracker } from './activity/idle'
+import { isActiveWindowAnki } from './activity/visibility'
 
 function justPlay (audioElement: HTMLAudioElement) {
   audioElement.pause()
@@ -31,10 +33,13 @@ export class ATInstance {
   resumeAudio = new Audio('_at_resume.mp3')
   alertAudioInterval: number | null = null
   _activityTracker: ActivityTracker
+  _idleTracker: IdleTracker | null
 
   constructor () {
     this.alertAudio.loop = true
-    this._activityTracker = new ActivityTracker()
+
+    this._idleTracker = null
+    this._activityTracker = new ActivityTracker(() => isActiveWindowAnki(this._idleTracker))
     this._activityTracker.trackIdle = false
     this._activityTracker.onFocus = this._onFocus.bind(this)
     this._activityTracker.onIdle = this._onIdle.bind(this)
@@ -43,6 +48,11 @@ export class ATInstance {
   dispose () {
     // TODO: refactor constructor-dispose cycle.
     this._activityTracker.dispose()
+    if (this._idleTracker) {
+      this._idleTracker.dispose()
+      this._idleTracker = null
+    }
+
     this.alertAudio.pause()
     this.resumeAudio.pause()
     if (this.alertAudioInterval) {
@@ -85,7 +95,16 @@ export class ATInstance {
 
   // Public API
   enableIdleAlarm (enabled: boolean) {
-    this._activityTracker.trackIdle = enabled
+    if (this._idleTracker) {
+      if (!enabled) {
+        this._idleTracker.dispose()
+        this._idleTracker = null
+      }
+    } else {
+      if (enabled) {
+        this._idleTracker = new IdleTracker()
+      }
+    }
   }
 
   setAlarmSound (url: string) {
@@ -100,5 +119,12 @@ export class ATInstance {
     this.alertAudio.pause()
     this.alertAudio.remove()
     this.alertAudio = newAudio
+  }
+
+  resetIdleTimer () {
+    if (this._idleTracker) {
+      this._idleTracker.resetIdleTimer()
+      console.log('idle tracker reset')
+    }
   }
 }
