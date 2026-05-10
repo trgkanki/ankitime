@@ -15,7 +15,7 @@
 
 # -*- coding: utf-8 -*-
 #
-# ankitime v23.1.6i116
+# ankitime v26.5.10i46
 #
 # Copyright: trgk (phu54321@naver.com)
 # License: GNU AGPL, version 3 or later;

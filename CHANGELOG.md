@@ -2,6 +2,12 @@
 
 [comment]: # (DO NOT MODIFY. new changelog goes here)
 
+## 26.5.10i46 (2026-05-10)
+
+- qt6 fix
+- timer now works.
+-
+
 ## 23.1.6i116 (2023-01-06)
 
 - "resumeFeedback" option added
